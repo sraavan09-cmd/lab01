@@ -1,0 +1,22 @@
+{
+  "name": "lab-01",
+  "version": "1.0.0",
+  "description": "Lab 1 - Node.js and Express Server",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "start:express": "node src/server.js",
+    "start:http": "node src/http-server.js"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "backend",
+    "lab-01"
+  ],
+  "author": "Y. SRAAVAN (252U1R1264)",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.3.0"
+  }
+}
