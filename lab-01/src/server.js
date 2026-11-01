@@ -26,28 +26,40 @@ app.get('/about', (req, res) => {
     name: 'Y. SRAAVAN',
     registrationNumber: '252U1R1264',
     section: 'CSE-2E & 211(S-6)',
+    course: 'Backend Development Fundamentals',
     lab: 'Lab 1: Node.js and Express Server'
   });
 });
 
-// 3. GET /time - Current date, time, and timestamp using new Date()
+// 3. GET /date - Today's date (NxtWave / course standard format)
+app.get('/date', (req, res) => {
+  const date = new Date();
+  res.status(200).send(`Today's date is ${date}`);
+});
+
+// 4. GET /time - Current date, time, and timestamp using new Date()
 app.get('/time', (req, res) => {
   const now = new Date();
   res.status(200).json({
     date: now.toISOString().split('T')[0],
     time: now.toTimeString().split(' ')[0],
-    timestamp: now.getTime()
+    timestamp: now.getTime(),
+    iso: now.toISOString(),
+    utc: now.toUTCString(),
+    local: now.toString()
   });
 });
 
-// 4. Unknown routes handler - 404 Not Found
+// 5. Undefined path handler - 404 Route Not Found
 app.use((req, res) => {
   res.status(404).json({
-    error: '404 - Route Not Found'
+    error: '404 - Route Not Found',
+    message: `The requested path '${req.originalUrl}' does not exist on this server.`,
+    statusCode: 404
   });
 });
 
-// 5. Global Error Handling Middleware
+// 6. Global Error Handling Middleware
 app.use((err, req, res, next) => {
   console.error('[Server Error]:', err.stack);
   res.status(500).json({
@@ -61,4 +73,3 @@ const server = app.listen(PORT, () => {
 });
 
 module.exports = { app, server };
-

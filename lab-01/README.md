@@ -165,8 +165,9 @@ Console output:
 | :--- | :--- | :--- | :--- | :--- |
 | **GET** | `/` | Returns welcome message text | `text/html; charset=utf-8` | `200 OK` |
 | **GET** | `/about` | Returns student details and lab info as JSON | `application/json; charset=utf-8` | `200 OK` |
+| **GET** | `/date` | Returns today's formatted date string (NxtWave format) | `text/html; charset=utf-8` | `200 OK` |
 | **GET** | `/time` | Returns dynamic date, time, and timestamp | `application/json; charset=utf-8` | `200 OK` |
-| **ALL** | `/*` (Unknown) | Catches any undefined route and returns error | `application/json; charset=utf-8` | `404 Not Found` |
+| **ALL** | `/*` (Undefined) | Custom 404 handler for undefined paths | `application/json; charset=utf-8` | `404 Not Found` |
 
 ---
 
@@ -191,11 +192,21 @@ Console output:
     "name": "Y. SRAAVAN",
     "registrationNumber": "252U1R1264",
     "section": "CSE-2E & 211(S-6)",
+    "course": "Backend Development Fundamentals",
     "lab": "Lab 1: Node.js and Express Server"
   }
   ```
 
-### 3. `GET /time`
+### 3. `GET /date`
+- **Method:** `GET`
+- **Path:** `/date`
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```text
+  Today's date is Sun Nov 01 2026 17:38:30 GMT+0530 (India Standard Time)
+  ```
+
+### 4. `GET /time`
 - **Method:** `GET`
 - **Path:** `/time`
 - **Status Code:** `200 OK`
@@ -204,18 +215,23 @@ Console output:
   {
     "date": "2026-11-01",
     "time": "16:59:29",
-    "timestamp": 1793532569577
+    "timestamp": 1793532569577,
+    "iso": "2026-11-01T11:29:29.577Z",
+    "utc": "Sun, 01 Nov 2026 11:29:29 GMT",
+    "local": "Sun Nov 01 2026 16:59:29 GMT+0530 (India Standard Time)"
   }
   ```
 
-### 4. Invalid Routes (404 Handling)
+### 5. Undefined Routes (404 Handling)
 - **Method:** `ANY`
 - **Path:** `/random-route` (or any unhandled path)
 - **Status Code:** `404 Not Found`
 - **Response Body:**
   ```json
   {
-    "error": "404 - Route Not Found"
+    "error": "404 - Route Not Found",
+    "message": "The requested path '/random-route' does not exist on this server.",
+    "statusCode": 404
   }
   ```
 
@@ -244,9 +260,10 @@ The Express server was tested across all required endpoints using automated HTTP
 ```
 [Express Server] Server running successfully at http://localhost:3000
 GET /                          -> Status: 200 OK | Body: Welcome to Lab 1 - Node.js and Express Server!
-GET /about                     -> Status: 200 OK | Body: {"name":"Y. SRAAVAN","registrationNumber":"252U1R1264","section":"CSE-2E & 211(S-6)","lab":"Lab 1: Node.js and Express Server"}
-GET /time                      -> Status: 200 OK | Body: {"date":"2026-11-01","time":"16:59:29","timestamp":1793532569577}
-GET /random-unknown-endpoint   -> Status: 404 Not Found | Body: {"error":"404 - Route Not Found"}
+GET /about                     -> Status: 200 OK | Body: {"name":"Y. SRAAVAN","registrationNumber":"252U1R1264","section":"CSE-2E & 211(S-6)","course":"Backend Development Fundamentals","lab":"Lab 1: Node.js and Express Server"}
+GET /date                      -> Status: 200 OK | Body: Today's date is Sun Nov 01 2026 17:38:30 GMT+0530 (India Standard Time)
+GET /time                      -> Status: 200 OK | Body: {"date":"2026-11-01","time":"16:59:29","timestamp":1793532569577,"iso":"2026-11-01T11:29:29.577Z","utc":"Sun, 01 Nov 2026 11:29:29 GMT","local":"Sun Nov 01 2026 16:59:29 GMT+0530 (India Standard Time)"}
+GET /undefined-sample-path     -> Status: 404 Not Found | Body: {"error":"404 - Route Not Found","message":"The requested path '/undefined-sample-path' does not exist on this server.","statusCode":404}
 ```
 
 Every endpoint returns the exact requested payload, proper HTTP headers, and corresponding status code without server crashes or unhandled exceptions.

@@ -13,8 +13,17 @@ const PORT = process.env.PORT || 3000;
 
 // Create the HTTP server using Node.js built-in http module
 const server = http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
-  res.end('Hello');
+  if (req.url === '/') {
+    res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end('Hello');
+  } else {
+    res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
+    res.end(JSON.stringify({
+      error: '404 - Route Not Found',
+      message: `The requested path '${req.url}' does not exist on this server.`,
+      statusCode: 404
+    }));
+  }
 });
 
 // Start listening on port 3000
@@ -22,3 +31,4 @@ server.listen(PORT, () => {
   console.log(`[HTTP Server] Server is running and listening at http://localhost:${PORT}`);
 });
 
+module.exports = server;
