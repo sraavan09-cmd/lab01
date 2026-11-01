@@ -14,7 +14,7 @@
 | **Section** | CSE-2E & 211(S-6) |
 | **Lab Number** | 01 |
 | **Lab Title** | Node.js and Express Server |
-| **GitHub Repository** | [https://github.com/sraavan09-cmd/LAB-1](https://github.com/sraavan09-cmd/LAB-1) |
+| **GitHub Repository** | [https://github.com/sraavan09-cmd/lab01](https://github.com/sraavan09-cmd/lab01) |
 
 ---
 
@@ -109,8 +109,8 @@ Task 1 of the lab requires initializing the project using `npm init -y` and expl
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/sraavan09-cmd/LAB-1.git
-   cd LAB-1/lab-01
+   git clone https://github.com/sraavan09-cmd/lab01.git
+   cd lab01/lab-01
    ```
 
 2. **Install project dependencies:**
